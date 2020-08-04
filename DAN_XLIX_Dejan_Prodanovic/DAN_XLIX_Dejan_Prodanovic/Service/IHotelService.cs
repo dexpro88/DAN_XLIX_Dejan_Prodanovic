@@ -11,6 +11,10 @@ namespace DAN_XLIX_Dejan_Prodanovic.Service
     {
         tblUser AddUser(tblUser user);
         tblManager AddManager(tblManager manager);
+        tblEmployee AddEmployee(tblEmployee employee);
+        tblUser GetGetEployeeByUserNameAndPass(string userName,string password);
+        List<tblUser> GetUsers();
+        tblEmployee GetEmloyeByUserId(int userId);
         
     }
 }

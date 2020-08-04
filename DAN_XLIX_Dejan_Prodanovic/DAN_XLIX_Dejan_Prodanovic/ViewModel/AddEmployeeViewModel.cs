@@ -1,4 +1,6 @@
 ﻿using DAN_XLIX_Dejan_Prodanovic.Commands;
+using DAN_XLIX_Dejan_Prodanovic.Model;
+using DAN_XLIX_Dejan_Prodanovic.NewFolder1;
 using DAN_XLIX_Dejan_Prodanovic.Service;
 using DAN_XLIX_Dejan_Prodanovic.View;
 using System;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
@@ -27,24 +30,54 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
             view = employeeOpen;
             service = new HotelService();
             FloorsList = floors;
+            User = new tblUser();
+            Employee = new tblEmployee();
 
         }
 
+        private tblUser user;
+        public tblUser User
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                user = value;
+                OnPropertyChanged("User");
+            }
+        }
 
-        //#region Properties
-        //private tblProduct selectetProduct;
-        //public tblProduct SelectetProduct
-        //{
-        //    get
-        //    {
-        //        return selectetProduct;
-        //    }
-        //    set
-        //    {
-        //        selectetProduct = value;
-        //        OnPropertyChanged("SelectetProduct");
-        //    }
-        //}
+        private tblEmployee employee;
+        public tblEmployee Employee
+        {
+            get
+            {
+                return employee;
+            }
+            set
+            {
+                employee = value;
+                OnPropertyChanged("Employee");
+            }
+        }
+
+    
+
+        private string floor;
+        public string Floor
+        {
+            get
+            {
+                return floor;
+            }
+            set
+            {
+                floor = value;
+                OnPropertyChanged("Floor");
+            }
+        }
         private List<string> floorsList;
         public List<string> FloorsList
         {
@@ -58,21 +91,32 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
                 OnPropertyChanged("FloorsList");
             }
         }
-        //#endregion
 
-        //#region Commands
-        //private ICommand logout;
-        //public ICommand Logout
-        //{
-        //    get
-        //    {
-        //        if (logout == null)
-        //        {
-        //            logout = new RelayCommand(param => LogoutExecute(), param => CanLogoutExecute());
-        //        }
-        //        return logout;
-        //    }
-        //}
+        private string gender = "male";
+        public string Gender
+        {
+            get { return gender; }
+            set
+            {
+                gender = value;
+                OnPropertyChanged("Gender");
+            }
+        }
+
+
+
+        private ICommand logout;
+        public ICommand Logout
+        {
+            get
+            {
+                if (logout == null)
+                {
+                    logout = new RelayCommand(param => LogoutExecute(), param => CanLogoutExecute());
+                }
+                return logout;
+            }
+        }
 
         private void LogoutExecute()
         {
@@ -94,6 +138,69 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
         }
 
 
+        private ICommand save;
+        public ICommand Save
+        {
+            get
+            {
+                if (save == null)
+                {
+                    save = new RelayCommand(SaveExecute, CanSaveExecute);
+                }
+                return save;
+            }
+        }
+
+        private void SaveExecute(object parameter)
+        {
+            try
+            {
+
+                var passwordBox = parameter as PasswordBox;
+                var password = passwordBox.Password;
+
+                string encryptedString = EncryptionHelper.Encrypt(password);
+
+                User.Passwd = encryptedString;
+
+                User = service.AddUser(User);
+
+                Employee.HotelFloor = Floor;
+
+                Employee.UserId = User.ID;
+
+              
+                if (Gender.Equals("male"))
+                {
+                    Employee.Gender = "m";
+                }
+                else
+                {
+                    Employee.Gender = "f";
+                }
+                service.AddEmployee(Employee);
+
+                view.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private bool CanSaveExecute(object param)
+        {
+
+            if (String.IsNullOrEmpty(User.FullName) || String.IsNullOrEmpty(User.Username))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
         private ICommand close;
         public ICommand Close
@@ -125,53 +232,22 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
         }
 
 
+        private void ChooseGenderExecute(object parameter)
+        {
+            Gender = (string)parameter;
+        }
 
-        //private ICommand addProduct;
-        //public ICommand AddProduct
-        //{
-        //    get
-        //    {
-        //        if (addProduct == null)
-        //        {
-        //            addProduct = new RelayCommand(param => AddProductExecute(),
-        //                param => CanAddProductExecute());
-        //        }
-        //        return addProduct;
-        //    }
-        //}
-
-        //private void AddProductExecute()
-        //{
-        //    try
-        //    {
-        //        AddProduct addProduct = new AddProduct();
-        //        addProduct.ShowDialog();
-
-        //        if ((addProduct.DataContext as AddProductViewModel).IsUpdateProduct == true)
-        //        {
-        //            string productName = (addProduct.DataContext as AddProductViewModel).Product.ProductName;
-        //            int amount = (int)(addProduct.DataContext as AddProductViewModel).Product.Amount;
-        //            string textToWrite = String.Format("You added {0} of product {1}."
-        //                  , amount, productName);
-        //            eventObject.OnActionPerformed(textToWrite);
-        //            ProductList = dataService.GetProducts();
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //}
-        //private bool CanAddProductExecute()
-        //{
-
-        //    return true;
-        //}
-
-
-
-        //#endregion
+        private bool CanChooseGenderExecute(object parameter)
+        {
+            if (parameter != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
 
     }

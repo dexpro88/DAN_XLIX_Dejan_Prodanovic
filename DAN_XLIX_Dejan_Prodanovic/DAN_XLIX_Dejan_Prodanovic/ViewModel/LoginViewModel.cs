@@ -1,4 +1,7 @@
 ﻿using DAN_XLIX_Dejan_Prodanovic.Commands;
+using DAN_XLIX_Dejan_Prodanovic.Model;
+using DAN_XLIX_Dejan_Prodanovic.NewFolder1;
+using DAN_XLIX_Dejan_Prodanovic.Service;
 using DAN_XLIX_Dejan_Prodanovic.View;
 using System;
 using System.Collections.Generic;
@@ -16,11 +19,15 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
     {
         LoginView view;
         Dictionary<string, string> ownerData = new Dictionary<string, string>();
+        List<tblUser> users;
+        IHotelService hotelService;
 
         public LoginViewModel(LoginView loginView)
         {
             view = loginView;
             ReadOwnerUsernameAndPass();
+            hotelService = new HotelService();
+            users = hotelService.GetUsers();
         }
 
         private string userName;
@@ -71,7 +78,9 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
         void Submit(object obj)
         {
 
-            string password = (obj as PasswordBox).Password;
+            string encryptedString = (obj as PasswordBox).Password;
+
+            string password = EncryptionHelper.Encrypt(encryptedString);
 
             if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(password))
             {
@@ -79,12 +88,39 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
                 return;
             }
             if (UserName.Equals(ownerData["username"]) &&
-                password.Equals(ownerData["password"]))
+                encryptedString.Equals(ownerData["password"]))
             {
                 OwnerView ownerView = new OwnerView();
                 view.Close();
                 ownerView.Show();
+                return;
             }
+
+
+            foreach (var user in users)
+            {
+                if (user.Username.Equals(UserName) || user.Passwd.Equals(password))
+                {
+                   
+                    tblEmployee employee = hotelService.GetEmloyeByUserId(user.ID);
+                    if (employee!=null)
+                    {
+                        EmployeeView empView = new EmployeeView();
+                        empView.Show();
+                        view.Close();
+                    }
+                    else
+                    {
+                        ManagerView manView = new ManagerView();
+                        manView.Show();
+                        view.Close();
+                    }
+                    return;
+                }
+            }
+            MessageBox.Show("Wrong user name or password");
+           
+
             //else if (UserName.Equals(UserConstants.STOREKEEPER_USER_NAME) &&
             //    password.Equals(UserConstants.STOREKEEPER_PASSWORD))
             //{
@@ -93,11 +129,7 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
             //    storekeeperView.Show();
 
             //}
-            else
-            {
-                MessageBox.Show("Wrong username or password");
 
-            }
 
 
         }
