@@ -91,6 +91,7 @@
     <Compile Include="Model\tblVacationRequest.cs">
       <DependentUpon>HotelDatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="NewFolder1\EncryptionHelper.cs" />
     <Compile Include="Service\HotelService.cs" />
     <Compile Include="Service\IHotelService.cs" />
     <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
