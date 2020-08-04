@@ -114,7 +114,7 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
                     while ((line = sr.ReadLine()) != null)
                     {
                         string[] fileData = line.Split(':');
-                        MessageBox.Show(fileData[0]);
+                       
                         ownerData.Add(fileData[0],fileData[1]);
                       
                     }

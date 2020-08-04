@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace DAN_XLIX_Dejan_Prodanovic.View
 {
     /// <summary>
-    /// Interaction logic for OwnerView.xaml
+    /// Interaction logic for AddEmployee.xaml
     /// </summary>
-    public partial class OwnerView : Window
+    public partial class AddEmployee : Window
     {
-        public OwnerView()
+        public AddEmployee()
         {
             InitializeComponent();
-            DataContext = new OwnerViewModel(this);
+            DataContext = new AddEmployeeViewModel(this);
         }
     }
 }
