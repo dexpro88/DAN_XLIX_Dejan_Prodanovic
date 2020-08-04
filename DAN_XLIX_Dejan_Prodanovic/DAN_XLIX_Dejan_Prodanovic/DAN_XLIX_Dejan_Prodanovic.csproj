@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +64,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\HotelDatabaseModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelDatabaseModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HotelDatabaseModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HotelDatabaseModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelDatabaseModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\tblEmployee.cs">
+      <DependentUpon>HotelDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\tblManager.cs">
+      <DependentUpon>HotelDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\tblUser.cs">
+      <DependentUpon>HotelDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\tblVacationRequest.cs">
+      <DependentUpon>HotelDatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Service\HotelService.cs" />
     <Compile Include="Service\IHotelService.cs" />
     <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
@@ -122,6 +158,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Model\HotelDatabaseModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HotelDatabaseModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\HotelDatabaseModel.edmx.diagram">
+      <DependentUpon>HotelDatabaseModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -130,6 +174,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\HotelDatabaseModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelDatabaseModel.edmx</DependentUpon>
+      <LastGenOutput>HotelDatabaseModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\HotelDatabaseModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelDatabaseModel.edmx</DependentUpon>
+      <LastGenOutput>HotelDatabaseModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

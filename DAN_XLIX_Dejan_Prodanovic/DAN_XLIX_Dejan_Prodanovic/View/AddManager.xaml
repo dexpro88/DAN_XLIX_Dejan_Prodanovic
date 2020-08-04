@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DAN_XLIX_Dejan_Prodanovic.View"
         mc:Ignorable="d"
         Title="AddManager"
-        Height="450"
+        Height="700"
         Width="300"
         Background="#2e3137"
         WindowStartupLocation="CenterScreen">
@@ -53,14 +53,16 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center">
-            <Label Content="Name:" />
+            <Label Content="Full Name:" />
             <TextBox Text="{Binding Product.ProductName}" />
-            <Label Content="Code:" />
-            <TextBox Text="{Binding Product.Code}" />
-            <Label Content="Price:" />
+            <Label Content="Years of experience:" />
+            <TextBox Text="{Binding Product.ProductName}" />
+            <Label Content="Date Of birth:" />
+            <DatePicker  
+                        SelectedDate="{Binding StartDate}" />
+            <Label Content="Mail:" />
             <TextBox Text="{Binding Product.Price}" />
-            <Label Content="Amount:" />
-            <TextBox Text="{Binding Product.Amount}" />
+           
             <Label Content="Floor:" />
             <ComboBox  
                       Name="cmbFloor"
@@ -77,6 +79,15 @@
                       IsEditable="True"
                       ItemsSource="{Binding LevelList, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding SelctedLocation, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="Username:" />
+            <TextBox Text="{Binding Product.Amount}" />
+             
+            <Label Content="Password:" />
+            <PasswordBox Name="passwordBox"
+                         Background="#545d6a"
+                         Foreground="White"
+                         FontSize="12"
+                         Margin="0 -10" />
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"

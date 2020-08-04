@@ -28,8 +28,6 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
             service = new HotelService();
             FloorsList = floors;
 
-           
-
         }
 
 

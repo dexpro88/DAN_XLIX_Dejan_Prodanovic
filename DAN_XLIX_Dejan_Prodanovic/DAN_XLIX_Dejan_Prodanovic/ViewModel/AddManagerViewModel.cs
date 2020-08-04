@@ -1,4 +1,5 @@
 ﻿using DAN_XLIX_Dejan_Prodanovic.Commands;
+using DAN_XLIX_Dejan_Prodanovic.Model;
 using DAN_XLIX_Dejan_Prodanovic.Service;
 using DAN_XLIX_Dejan_Prodanovic.View;
 using System;
@@ -28,6 +29,21 @@ namespace DAN_XLIX_Dejan_Prodanovic.ViewModel
             service = new HotelService();
             FloorsList = floors;
             LevelList = qualificationLevels;
+        }
+
+
+        private tblUser user;
+        public tblUser User
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                user = value;
+                OnPropertyChanged("User");
+            }
         }
 
         private List<string> floorsList;
